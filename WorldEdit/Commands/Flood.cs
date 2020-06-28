@@ -26,13 +26,17 @@ namespace WorldEdit.Commands
 					if ((!tile.active() || !Main.tileSolid[tile.type]) && magicWand.InSelection(i, j))
 					{
 						tile.liquidType((byte)liquid);
-						tile.liquid = 255;
+						if (liquid == 69) tile.liquid = 0;
+						else tile.liquid = 255;
 						edits++;
 					}
 				}
 			}
 			ResetSection();
-			plr.SendSuccessMessage("Flooded area. ({0})", edits);
+			string sendmsg = $"Flooded area. ({edits})";
+			if (liquid == 69) 
+				sendmsg = $"Cleaned area. ({edits})";
+			plr.SendSuccessMessage(sendmsg);
 		}
 	}
 }

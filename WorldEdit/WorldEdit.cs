@@ -1080,7 +1080,9 @@ namespace WorldEdit
 			}
 
 			int liquid = 0;
-			if (string.Equals(e.Parameters[0], "lava", StringComparison.OrdinalIgnoreCase))
+			if (string.Equals(e.Parameters[0], "none", StringComparison.OrdinalIgnoreCase))
+				liquid = 69;
+			else if (string.Equals(e.Parameters[0], "lava", StringComparison.OrdinalIgnoreCase))
 				liquid = 1;
 			else if (string.Equals(e.Parameters[0], "honey", StringComparison.OrdinalIgnoreCase))
 				liquid = 2;
