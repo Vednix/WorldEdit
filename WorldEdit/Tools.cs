@@ -146,11 +146,11 @@ namespace WorldEdit
                 try
                 {
                     var logicSensorCount = reader.ReadInt32();
-                    worldData.LogicSensors = new WorldSectionData.LogicSensorData[logicSensorCount];
-                    for (var i = 0; i < logicSensorCount; i++)
-                    {
-                        worldData.LogicSensors[i] = reader.ReadLogicSensor();
-                    }
+                    //worldData.LogicSensors = new WorldSectionData.LogicSensorData[logicSensorCount];
+                    //for (var i = 0; i < logicSensorCount; i++)
+                    //{
+                    //    worldData.LogicSensors[i] = reader.ReadLogicSensor();
+                    //}
 
                     var trainingDummyCount = reader.ReadInt32();
                     worldData.TrainingDummies = new WorldSectionData.TrainingDummyData[trainingDummyCount];
@@ -231,15 +231,15 @@ namespace WorldEdit
             };
         }
 
-        private static WorldSectionData.LogicSensorData ReadLogicSensor(this BinaryReader reader)
-        {
-            return new WorldSectionData.LogicSensorData
-            {
-                X = reader.ReadInt32(),
-                Y = reader.ReadInt32(),
-                Type = (TELogicSensor.LogicCheckType)reader.ReadInt32()
-            };
-        }
+        //private static WorldSectionData.LogicSensorData ReadLogicSensor(this BinaryReader reader)
+        //{
+        //    return new WorldSectionData.LogicSensorData
+        //    {
+        //        X = reader.ReadInt32(),
+        //        Y = reader.ReadInt32(),
+        //        Type = (TELogicSensor.LogicCheckType)reader.ReadInt32()
+        //    };
+        //}
 
         private static WorldSectionData.TrainingDummyData ReadTrainingDummy(this BinaryReader reader)
         {
@@ -296,8 +296,8 @@ namespace WorldEdit
                 {
                     if (TEItemFrame.Find(i, j) != -1)
                     { TEItemFrame.Kill(i, j); }
-                    if (TELogicSensor.Find(i, j) != -1)
-                    { TELogicSensor.Kill(i, j); }
+                    //if (TELogicSensor.Find(i, j) != -1)
+                    //{ TELogicSensor.Kill(i, j); }
                     if (TETrainingDummy.Find(i, j) != -1)
                     { TETrainingDummy.Kill(i, j); }
                 }
@@ -371,15 +371,15 @@ namespace WorldEdit
 				}
             }
 
-            foreach (var logicSensor in Data.LogicSensors)
-            {
-                var id = TELogicSensor.Place(logicSensor.X + x, logicSensor.Y + y);
-                if (id == -1) { continue; }
-                var sensor = (TELogicSensor)TileEntity.ByID[id];
-                if (!InMapBoundaries(sensor.Position.X, sensor.Position.Y))
-                { continue; }
-                sensor.logicCheck = logicSensor.Type;
-            }
+            //foreach (var logicSensor in Data.LogicSensors)
+            //{
+            //    var id = TELogicSensor.Place(logicSensor.X + x, logicSensor.Y + y);
+            //    if (id == -1) { continue; }
+            //    var sensor = (TELogicSensor)TileEntity.ByID[id];
+            //    if (!InMapBoundaries(sensor.Position.X, sensor.Position.Y))
+            //    { continue; }
+            //    sensor.logicCheck = logicSensor.Type;
+            //}
 
             foreach (var trainingDummy in Data.TrainingDummies)
             {
@@ -528,7 +528,7 @@ namespace WorldEdit
 				Chests = new List<WorldSectionData.ChestData>(),
 				Signs = new List<WorldSectionData.SignData>(),
 				ItemFrames = new List<WorldSectionData.ItemFrameData>(),
-                LogicSensors = new List<WorldSectionData.LogicSensorData>(),
+                //LogicSensors = new List<WorldSectionData.LogicSensorData>(),
                 TrainingDummies = new List<WorldSectionData.TrainingDummyData>()
             };
 

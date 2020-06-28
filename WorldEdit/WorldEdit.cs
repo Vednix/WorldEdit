@@ -151,109 +151,109 @@ namespace WorldEdit
 				#endregion
 				#region Packet 109 - MassWireOperation
 
-				case PacketTypes.MassWireOperation:
-					PlayerInfo data = TShock.Players[e.Msg.whoAmI].GetPlayerInfo();
-					if (data.Point != 0)
-					{
-						using (var reader = new BinaryReader(new MemoryStream(e.Msg.readBuffer, e.Index, e.Length)))
-						{
-							int startX = reader.ReadInt16();
-							int startY = reader.ReadInt16();
-							int endX = reader.ReadInt16();
-							int endY = reader.ReadInt16();
+				//case PacketTypes.MassWireOperation:
+				//	PlayerInfo data = TShock.Players[e.Msg.whoAmI].GetPlayerInfo();
+				//	if (data.Point != 0)
+				//	{
+				//		using (var reader = new BinaryReader(new MemoryStream(e.Msg.readBuffer, e.Index, e.Length)))
+				//		{
+				//			int startX = reader.ReadInt16();
+				//			int startY = reader.ReadInt16();
+				//			int endX = reader.ReadInt16();
+				//			int endY = reader.ReadInt16();
 
-							if (startX >= 0 && startY >= 0 && endX >= 0 && endY >= 0 && startX < Main.maxTilesX && startY < Main.maxTilesY && endX < Main.maxTilesX && endY < Main.maxTilesY)
-                            {
-                                if (data.Point == 4)
-                                {
-                                    if (!MagicWand.GetMagicWandSelection(startX, startY,
-                                        data.SavedExpression,
-                                        TShock.Players[e.Msg.whoAmI], out MagicWand selection))
-                                    {
-                                        TShock.Players[e.Msg.whoAmI].SendErrorMessage("Can't " +
-                                            "start counting magic wand selection from this tile.");
-                                    }
-                                    else
-                                    {
-                                        data.MagicWand = selection;
-                                        TShock.Players[e.Msg.whoAmI].SendSuccessMessage("Set magic wand selection.");
-                                    }
-                                    data.SavedExpression = null;
-                                }
-                                else if (startX == endX && startY == endY)
-								{
-									// Set a single point
-									if (data.Point == 1)
-									{
-										data.X = startX;
-										data.Y = startY;
-										TShock.Players[e.Msg.whoAmI].SendInfoMessage("Set point 1.");
-									}
-									else if (data.Point == 2)
-									{
-										data.X2 = startX;
-										data.Y2 = startY;
-										TShock.Players[e.Msg.whoAmI].SendInfoMessage("Set point 2.");
-									}
-									else if (data.Point == 3)
-									{
-										List<string> regions = TShock.Regions.InAreaRegionName(startX, startY).ToList();
-										if (regions.Count == 0)
-										{
-											TShock.Players[e.Msg.whoAmI].SendErrorMessage("No region exists there.");
-										}
-										else
-										{
-											Region curReg = TShock.Regions.GetRegionByName(regions[0]);
-											data.X = curReg.Area.Left;
-											data.Y = curReg.Area.Top;
-											data.X2 = curReg.Area.Right;
-											data.Y2 = curReg.Area.Bottom;
-											TShock.Players[e.Msg.whoAmI].SendInfoMessage("Set region.");
-										}
-                                    }
-                                }
-								else
-								{
-									// Set both points at the same time
-									if (data.Point == 1 || data.Point == 2)
-									{
-										data.X = startX;
-										data.Y = startY;
-										data.X2 = endX;
-										data.Y2 = endY;
-										TShock.Players[e.Msg.whoAmI].SendInfoMessage("Set area.");
-									}
-									else if (data.Point == 3)
-									{
-										// Set topmost region inside the selection
-										int x = Math.Min(startX, endX);
-										int y = Math.Min(startY, endY);
-										int width = Math.Max(startX, endX) - x;
-										int height = Math.Max(startY, endY) - y;
-										Rectangle rect = new Rectangle(x, y, width, height);
-										List<Region> regions = TShock.Regions.Regions.FindAll(r => rect.Intersects(r.Area));
-										if (regions.Count == 0)
-										{
-											TShock.Players[e.Msg.whoAmI].SendErrorMessage("No region exists there.");
-										}
-										else
-										{
-											Region curReg = TShock.Regions.GetTopRegion(regions);
-											data.X = curReg.Area.Left;
-											data.Y = curReg.Area.Top;
-											data.X2 = curReg.Area.Right;
-											data.Y2 = curReg.Area.Bottom;
-											TShock.Players[e.Msg.whoAmI].SendInfoMessage("Set region.");
-										}
-                                    }
-                                }
-                                data.Point = 0;
-								e.Handled = true;
-							}
-						}
-					}
-					return;
+				//			if (startX >= 0 && startY >= 0 && endX >= 0 && endY >= 0 && startX < Main.maxTilesX && startY < Main.maxTilesY && endX < Main.maxTilesX && endY < Main.maxTilesY)
+    //                        {
+    //                            if (data.Point == 4)
+    //                            {
+    //                                if (!MagicWand.GetMagicWandSelection(startX, startY,
+    //                                    data.SavedExpression,
+    //                                    TShock.Players[e.Msg.whoAmI], out MagicWand selection))
+    //                                {
+    //                                    TShock.Players[e.Msg.whoAmI].SendErrorMessage("Can't " +
+    //                                        "start counting magic wand selection from this tile.");
+    //                                }
+    //                                else
+    //                                {
+    //                                    data.MagicWand = selection;
+    //                                    TShock.Players[e.Msg.whoAmI].SendSuccessMessage("Set magic wand selection.");
+    //                                }
+    //                                data.SavedExpression = null;
+    //                            }
+    //                            else if (startX == endX && startY == endY)
+				//				{
+				//					// Set a single point
+				//					if (data.Point == 1)
+				//					{
+				//						data.X = startX;
+				//						data.Y = startY;
+				//						TShock.Players[e.Msg.whoAmI].SendInfoMessage("Set point 1.");
+				//					}
+				//					else if (data.Point == 2)
+				//					{
+				//						data.X2 = startX;
+				//						data.Y2 = startY;
+				//						TShock.Players[e.Msg.whoAmI].SendInfoMessage("Set point 2.");
+				//					}
+				//					else if (data.Point == 3)
+				//					{
+				//						List<string> regions = TShock.Regions.InAreaRegionName(startX, startY).ToList();
+				//						if (regions.Count == 0)
+				//						{
+				//							TShock.Players[e.Msg.whoAmI].SendErrorMessage("No region exists there.");
+				//						}
+				//						else
+				//						{
+				//							Region curReg = TShock.Regions.GetRegionByName(regions[0]);
+				//							data.X = curReg.Area.Left;
+				//							data.Y = curReg.Area.Top;
+				//							data.X2 = curReg.Area.Right;
+				//							data.Y2 = curReg.Area.Bottom;
+				//							TShock.Players[e.Msg.whoAmI].SendInfoMessage("Set region.");
+				//						}
+    //                                }
+    //                            }
+				//				else
+				//				{
+				//					// Set both points at the same time
+				//					if (data.Point == 1 || data.Point == 2)
+				//					{
+				//						data.X = startX;
+				//						data.Y = startY;
+				//						data.X2 = endX;
+				//						data.Y2 = endY;
+				//						TShock.Players[e.Msg.whoAmI].SendInfoMessage("Set area.");
+				//					}
+				//					else if (data.Point == 3)
+				//					{
+				//						// Set topmost region inside the selection
+				//						int x = Math.Min(startX, endX);
+				//						int y = Math.Min(startY, endY);
+				//						int width = Math.Max(startX, endX) - x;
+				//						int height = Math.Max(startY, endY) - y;
+				//						Rectangle rect = new Rectangle(x, y, width, height);
+				//						List<Region> regions = TShock.Regions.Regions.FindAll(r => rect.Intersects(r.Area));
+				//						if (regions.Count == 0)
+				//						{
+				//							TShock.Players[e.Msg.whoAmI].SendErrorMessage("No region exists there.");
+				//						}
+				//						else
+				//						{
+				//							Region curReg = TShock.Regions.GetTopRegion(regions);
+				//							data.X = curReg.Area.Left;
+				//							data.Y = curReg.Area.Top;
+				//							data.X2 = curReg.Area.Right;
+				//							data.Y2 = curReg.Area.Bottom;
+				//							TShock.Players[e.Msg.whoAmI].SendInfoMessage("Set region.");
+				//						}
+    //                                }
+    //                            }
+    //                            data.Point = 0;
+				//				e.Handled = true;
+				//			}
+				//		}
+				//	}
+				//	return;
 
 					#endregion
 			}
@@ -662,7 +662,7 @@ namespace WorldEdit
 					if (!_commandQueue.TryTake(out command, -1, _cancel.Token))
 						return;
 					if (Main.rand == null)
-						Main.rand = new UnifiedRandom();
+						Main.rand = new Random();
 					command.Position();
 					command.Execute();
 				}
