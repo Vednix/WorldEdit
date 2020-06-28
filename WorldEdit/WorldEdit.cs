@@ -39,7 +39,7 @@ namespace WorldEdit
 		public static Dictionary<string, int> Walls = new Dictionary<string, int>();
 		public static Dictionary<string, int> Slopes = new Dictionary<string, int>();
 
-		public override string Author => "Nyx Studios, massive upgrade by Anzhelika";
+		public override string Author => "Nyx Studios, massive upgrade by Anzhelika & Mobile port by Vednix";
 		private readonly CancellationTokenSource _cancel = new CancellationTokenSource();
 		private readonly BlockingCollection<WECommand> _commandQueue = new BlockingCollection<WECommand>();
 		public override string Description => "Adds commands for mass editing of blocks.";
